@@ -1,0 +1,267 @@
+=> JavaScript 
+    => DOM maipulation, DOM properties
+    => Events and Event Listeners
+    => Event bubbling, Event Capturing and event.stopPropagtion()
+    => JSON
+    => Data types in JS
+    => Function 
+        -> Closures
+        -> Shadowing
+        -> Hoisting
+        -> variable and Functional Scope
+        -> first Class functions
+        -> Higher order functions
+        -> lambda
+        -> IIFE
+        -> Pure functions
+    => Objects
+        -> Object literals,
+        -> Types of creating objects
+        -> Inheritance
+    => Arrays
+        -> Creation and basic operations
+        -> methods on Arrays
+    => ShadowDOM
+    => Asynchronous programming and callbacks
+    => call(), bind() and apply()
+    => ES6
+        -> Arrow Function and lexical this
+        -> let, const
+        -> Modules
+        -> Map, Set, WeakMap, WeakSet,
+        -> Promises
+        -> async-await
+        -> Destructuring
+        -> Default, Rest and Spread operators
+        -> Classes
+        -> Interfaces
+=> TypeScript
+    => Generics
+    => Interfaces
+    => Classes
+    => enums
+    => Modules
+=> Angular
+    => Angular basics
+    => Classes
+    => Binding
+        -> Property
+        -> Attribute
+        -> Class
+        -> Style binding
+        -> Event Binding
+        -> Two-way binding using [(ng-model)]
+    => Component API
+        -> @Input
+        -> @Output
+        -> ViewEncapsulation
+    => Directives
+    => Pipes
+        -> Custom Pipes using PipeTransForm Interface
+    => Services
+        -> dependency Injection 
+        -> @Injectable()
+    => Forms
+        -> Template Driven Forms
+        -> Reactive Forms
+        -> FormGroupArray
+        -> FormGroup
+        -> FormControl
+        -> Validators
+
+_______________________________________________________________________________________
+
+HTML DOM =>
+.= The HTML DOM is a standard object model and programming interface for 
+.= The HTML elements as objects, defines properties, methods to get HTML objects and Events
+.= The HTML DOM is a standard for how to get, change, add, or delete HTML elements.
+
+-> A property is a value that you can get or set (like changing the content of an HTML element).
+-> A method is an action you can do (like add or deleting an HTML element).
+
+=> Finding HTML elements
+    -> document.querySelector, getElementById, getElementByTagName, getElementByClassName
+
+=> Changing HTML elements
+    -> element.innerHTML = new content
+    -> element.attribute = new value
+    -> element.setAttribute(attribute, value);
+    -> element.style.property = new Style
+
+=> Adding and deleting
+    -> document.createElement(element);
+    -> document.removeChild(element);
+    -> document.appendChild(element);
+    -> document.replaceChild(element)
+    -> document.write(text)   ---- write to the HTML output stream
+
+=> Adding event Handlers
+    -> document.getElementById(id).onclick = function() {}    ---- Adding event Handlers
+
+
+=> Timeout methods
+    -> setTimeout --- executes a function after the specified time -- clearTimeout
+    -> setInterval --- executes a function for every particular time specified -- clearInterval
+    -> setImmediate --- This method is used to break up long running operations and run a callback 
+                        function immediately after the browser has completed other operations 
+                        such as events and display updates.  -- clearImmediate
+
+
+==> Events and EventListeners
+
+-> Events are actions that are perfomed on the elements/ DOM Objects
+-> click, load, unload, keyboard, mousehover, focus, blur etc events
+
+
+=> examples
+
+    -> called in the element
+        <h1 onclick="this.innerHTML = 'Ooops!'">Click on this text!</h1>
+    
+    -> a function is called from the event handler
+        <h1 onclick="changeText(this)">Click on this text!</h1>
+
+        <script>
+        function changeText(id) { 
+            id.innerHTML = "Ooops!";
+        }
+        </script>
+
+    -> The HTML DOM allows you to assign events to HTML elements using JavaScript:
+
+        <script>
+            document.getElementById("myBtn").onclick = displayDate;
+        </script>
+
+
+EventListeners
+
+document.querySelector('.class5').addEventListener('click', function(){}, true/false)
+-> attaches an event to the specified element
+-> attaches an event to an element without overwriting existing event handlers.
+-> can add as many events and also same events are also allowed
+
+-> can be easily removed by using element.removeEventListener("mousemove", myFunction)
+
+=> Event Propagation
+    -> There are two ways of event propagation => Event Bubbling => Event Capturing
+
+    .= Consider a scenario where a <p> tag is bounded by a <div> both has event handlers set
+
+    => In 'Event Bubbling' - event on the <p> is handled first and then the <div> element's event.
+    => In 'Event Capturing' - the outer event is handled first and then the inner <p> element
+
+    --> To stop the event propagation we use "event.stopPropagtion()
+
+==> DOM Nodes --adding and removing Nodes (HTML elements) .appendChild(), .removeChild(), .replaceChild()
+==> DOM HTMLCollection Object  -- you can iterate through it but its not an array
+==> DOM NodeList  -- you can iterate through it but its not an array
+
+
+------------------------------------------------------------------------------------------------
+
+JavaScript Object Notation
+
+=> JSON Objects
+        let obj = { "name": "string", "id":56 }
+        -> loop it using for...in statement
+
+        for(let key in obj) {
+            console.log(key);
+            console.log(obj[key])
+        }
+
+        -> delete the properties using the delete keyword
+            delete obj.name;
+
+=> JSON Arrays
+
+    example: 
+    
+    myObj = {
+        "name":"John",
+        "age":30,
+        "cars": [
+            { "name":"Ford", "models":[ "Fiesta", "Focus", "Mustang" ] },
+            { "name":"BMW", "models":[ "320", "X3", "X5" ] },
+            { "name":"Fiat", "models":[ "500", "Panda" ] }
+        ]
+    }
+
+    -> loop using for...in or for loop
+
+        for(i in myObj.cars){ 
+            console.log(  myObj.cars[i].name  );
+            for(j in myObj.cars[i].models) {
+                console.log(  myObj.cars[i].models[j]  )
+            }
+        }
+
+==> JSON parse
+
+    JSON.parse(JSONObject)
+        -> parses a JSON Object to a Javascript Object
+
+==> JSON Stringfy
+
+    JSON.stringfy(JavaScriptObject)
+        -> converts a JS Object into a JSON Object
+
+
+_______________________________________________________________________________________
+
+-> call()
+-> apply()   --- write a method that can be used on different objects.
+
+-> example One:
+
+var person = {
+    fullName: function() {
+        return this.firstName + " " + this.lastName;
+    }
+}
+
+var person1 = {
+    firstName: "Mary",
+    lastName: "Doe",
+}
+
+person.fullName.call(person1);
+person.fullName.apply(person1);
+
+--> Both in the above return the same result 
+
+-> example Two:
+
+var person = {
+    fullName: function(city, country) {
+        return this.firstName + " " + this.lastName + "," + city + "," + country;
+    }
+}
+var person1 = {
+    firstName:"John",
+    lastName: "Doe",
+}
+
+person.fullName.call(person1, "Mumbai", "India")
+person.fullName.apply(person1, ["Mumbai", "India"])
+
+--> difference is: 
+
+The call() method takes arguments separately.
+The apply() method takes arguments as an array.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
